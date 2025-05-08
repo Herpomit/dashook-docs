@@ -96,3 +96,72 @@ paths:
                   message:
                     type: string
                     example: An unexpected error occurred.
+  /api/user/info:
+    post:
+      tags:
+        - user
+      summary: Get User Info
+      description: Returns user data based on the provided API key in the headers.
+      operationId: getUserInfo
+      requestBody:
+        required: false
+      responses:
+        "200":
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User Found!
+                  data:
+                    type: object
+                    properties:
+                      uuid:
+                        type: string
+                        format: uuid
+                        example: "559a3c1a-f54c-47ef-b49f-XXXX"
+                      email:
+                        type: string
+                        example: user@example.com
+                      username:
+                        type: string
+                        example: user123
+                      isActive:
+                        type: boolean
+                        example: true
+        "401":
+          description: Unauthorized - token missing or invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized - token missing
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not Found!
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Internal Server Error
